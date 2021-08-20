@@ -1,0 +1,97 @@
+// Test
+//////////////////////////////////////////////////////
+$var--global = #ff0000
+
+// Project variables
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+
+// Palette
+//////////////////////////////////////////////////////
+
+$colors = {
+  cat: #fd5f00,
+  dog: #8bc24c,
+  bird: #fed564,
+  wood: #515bd4,
+  stone: #ffffff,
+  sea: #13334c,
+}
+// Dependencies colors
+$colors["text"] = $colors.sea
+$colors["placeholder"] = rgba($colors.sea, 0.6)
+$colors["primary"] = $colors.cat
+$colors["secondary"] = $colors.dog
+
+
+// Breakpoints
+//////////////////////////////////////////////////////
+
+$breakpoints = {
+  tablet: 768px,
+  desktop: 1025px,
+}
+$breakpoints["mobile--max"] = $breakpoints.tablet - 1
+$breakpoints["tablet--max"] = $breakpoints.desktop - 1
+
+
+// Others from guide
+//////////////////////////////////////////////////////
+
+$border-radiuses = {
+  soccer: 0,
+  dancing: 2px,
+  swimming: 3px,
+  shooting: 10px,
+}
+
+$opacites = {
+  waltz: 1,
+  funky: 0.75,
+  rock: 0.66,
+  psy: 0.45,
+  reggae: 0,
+}
+
+$effects = {
+  duration: 0.1s,
+}
+
+
+// Elements
+//////////////////////////////////////////////////////
+
+$wrapper = {
+  gutter--desktop: 40px,
+  gutter--tablet: 32px,
+  gutter--mobile: 24px,
+}
+
+$grids = {
+  gutter--desktop: 32px,
+  gutter--tablet: 24px,
+  gutter--mobile: 16px,
+}
+
+$inputs = {
+  height--input: 40px,
+  height--textarea: 140px,
+
+  background--default: rgba($colors.wood, $opacites.psy),
+  background--hover: rgba($colors.wood, $opacites.psy),
+  background--active: rgba($colors.wood, $opacites.psy),
+  background--error: rgba($colors.dog, $opacites.psy),
+}
+
+$buttons = {
+  height--large: 64px,
+  height--normal: 48px,
+  height--small: 32px,
+
+  background--primary: $colors.cat,
+  background--secondary: $colors.bird,
+
+  color--primary: #fff,
+  color--secondary: #fff,
+}

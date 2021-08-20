@@ -1,0 +1,207 @@
+@import "../../../src/stylus/_stylebase.styl"
+
+// Import fonts
+//////////////////////////////////////////////////////
+
+@font-face {
+  font-family: $font-family;
+  src: url('/fonts/OpenSans/OpenSans-Regular.eot');
+  src: local('Open Sans Regular'), local('OpenSans-Regular'),
+    url('/fonts/OpenSans/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/OpenSans/OpenSans-Regular.woff') format('woff'),
+    url('/fonts/OpenSans/OpenSans-Regular.ttf') format('truetype');
+  font-weight: $font-weight.regular;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $font-family;
+  src: url('/fonts/OpenSans/OpenSans-Bold.eot');
+  src: local('Open Sans Bold'), local('OpenSans-Bold'),
+    url('/fonts/OpenSans/OpenSans-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/OpenSans/OpenSans-Bold.woff') format('woff'),
+    url('/fonts/OpenSans/OpenSans-Bold.ttf') format('truetype');
+  font-weight: $font-weight.bold;
+  font-style: normal;
+}
+
+// Customization
+//////////////////////////////////////////////////////
+
+$gutter = 20px
+
+html,
+body,
+#app
+  height: unset
+  max-height: unset
+  overflow: auto
+  letter-spacing normal
+
+body
+  color $colors.text
+
+#app
+  padding-top 57px
+
+.theme-container
+  height 100%
+  overflow-y auto
+
+.page
+  overflow-x hidden
+  z-index 1000
+
+  ul,
+  p
+    margin-top $gutter * 1.5 !important
+    margin-bottom $gutter * 1.5 !important
+
+    +$gadgets()
+      margin-top $gutter !important
+      margin-bottom $gutter !important
+
+  p
+    $text("natasha")
+
+strong
+  font-weight 700
+
+.theme-default-content:not(.custom)
+  +$desktop()
+    padding-left $wrapper.gutter--desktop
+    padding-right $wrapper.gutter--desktop
+
+  +$tablet()
+    padding-left $wrapper.gutter--tablet
+    padding-right $wrapper.gutter--tablet
+
+  +$mobile()
+    padding-left $wrapper.gutter--mobile
+    padding-right $wrapper.gutter--mobile
+
+.theme-default-content:not(.custom),
+.page-nav
+  max-width 900px
+
+  > h1
+    color $colors.primary
+    margin-bottom $gutter * 2 !important
+    padding-top $gutter * 8
+    padding-bottom round($gutter * 2/3)
+    $text("olga")
+
+    +$gadgets()
+      padding-top $gutter * 4
+      $text("anna")
+
+  > h2
+    color rgba($colors.text, $opacites.psy)
+    padding-top $gutter * 5
+    margin-bottom $gutter * 1.5
+    padding-bottom round($gutter * 2/3)
+    $text("anna")
+
+    +$gadgets()
+      padding-top $gutter * 4
+      font-size 28px
+      $text("maria")
+
+  > h3
+    $text("maria")
+    padding-top $gutter * 5
+    padding-bottom $gutter * 0.5
+
+    +$gadgets()
+      padding-top $gutter * 4
+      padding-bottom $gutter * 0.25
+      $text("katya")
+
+  > h4
+    $text("alena")
+    margin-bottom ($gutter / 2)
+
+.navbar
+  z-index 3000
+
+  .site-name
+    transform translateY(4px)
+    color $colors.primary
+    $text("katya")
+
+.search-box input:focus
+  border-color $colors.primary
+
+a.sidebar-link
+  $text("natasha")
+  font-weight normal
+
+  &:hover
+    color $colors.primary
+
+a.sidebar-link.active
+  color $colors.primary
+  background rgba($colors.primary, ($opacites.psy / 2))
+  border-left-color $colors.primary
+
+.sidebar-sub-header a.sidebar-link
+  $text("nina")
+
+  &.active
+    background transparent
+
+table
+  thead
+    tr th
+      background rgba($colors.text, $opacites.psy)
+      color #fff
+
+  tr:nth-child(2n)
+    background none
+
+.theme-default-content:not(.custom) a.toolbar__button:hover
+  text-decoration none
+
+.custom-block
+  margin-top 40px !important
+  margin-bottom 40px !important
+
+  &.tip
+    color darken($colors.wood, 60%)
+    border-color $colors.wood
+    background rgba($colors.wood, ($opacites.psy / 2))
+
+    .custom-block-title
+      color darken($colors.wood, 30%)
+
+  &.warning
+    color darken($colors.primary, 60%)
+    border-color $colors.primary
+    background rgba($colors.primary, ($opacites.psy / 2))
+
+    .custom-block-title
+      color darken($colors.primary, 30%)
+
+  &.danger
+    color darken($colors.bird, 60%)
+    border-color $colors.bird
+    background rgba($colors.bird, ($opacites.psy / 2))
+
+    .custom-block-title
+      color darken($colors.bird, 30%)
+
+.extra-class
+  background darken($colors.sea, 15%) !important
+
+.page-nav a,
+.page-nav span,
+.nav-links
+  color $colors.primary
+
+
+// Custom classes for markdown
+//////////////////////////////////////////////////////
+
+.code--path
+  +$gadgets()
+    font-size 9px !important
