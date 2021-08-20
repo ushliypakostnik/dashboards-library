@@ -5,7 +5,9 @@
       '.component-name__element--modifier1': prop1,
       '.component-name__element--modifier2': prop2,
     }"
-  >This is test component!!!</div>
+  >
+    This is test component!!!
+  </div>
 </template>
 
 <script>
