@@ -1,0 +1,55 @@
+{
+  "name": "ui-library-starter-test",
+  "description": "UI Library Starter Demonstration",
+  "version": "0.1.1",
+  "private": false,
+  "main": "dist/ui-library-starter-test.umd.min.js",
+  "unpkg": "dist/ui-library-starter-test.min.js",
+  "jsdelivr": "dist/ui-library-starter-test.umd.min.js",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "rimraf ./src/static && cp -r ./docs/.vuepress/public ./src/static && vue-cli-service build --target lib --name ui-library-starter-test src/main.js",
+    "lint": "vue-cli-service lint",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "author": "Levon Gambaryan",
+  "license": "MIT",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ushliypakostnik/ui-library-starter-test"
+  },
+  "bugs": {
+    "url": "https://github.com/ushliypakostnik/ui-library-starter-test/issues"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^2.2.1",
+    "vue-template-compiler": "^2.6.11",
+    "vuepress": "^1.8.2"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "vuepress",
+    "stylus",
+    "docs",
+    "library",
+    "ui"
+  ]
+}
