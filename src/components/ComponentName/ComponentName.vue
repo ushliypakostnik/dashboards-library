@@ -27,6 +27,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import "~/src/stylus/_stylebase.styl";
+
 .component-name
   background $colors.primary // test styles
   // add adaptive
