@@ -1,2 +1,2 @@
-export { default as Link } from './Link';
-export { default as ComponentName } from './ComponentName';
+export { default as Example } from './Example';
+export { default as Dashboards } from './Dashboards';

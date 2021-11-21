@@ -1,9 +1,9 @@
 <template>
   <div
-    class="component-name"
+    class="example"
     :class="{
-      '.component-name__element--modifier1': prop1,
-      '.component-name__element--modifier2': prop2,
+      '.example__element--modifier1': prop1,
+      '.example__element--modifier2': prop2,
     }"
   >
     This is test component!!!
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'ComponentName',
+  name: 'Example',
 
   props: {
     prop1: {
@@ -31,7 +31,7 @@ export default {
 <style lang="stylus" scoped>
 @import "~/src/stylus/_stylebase.styl";
 
-.component-name
+.example
   background $colors.primary // test styles
   // add adaptive
   +$mobile()

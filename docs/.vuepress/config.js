@@ -2,8 +2,8 @@ module.exports = {
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'UI Library',
-      description: 'Vue Component UI Library',
+      title: 'Dashboards Library',
+      description: 'Dashboards',
     },
   },
 
@@ -20,14 +20,17 @@ module.exports = {
             title: `Components`,
             children: [
               {
-                title: `Link`,
-                path: '/components/link',
+                title: `Example`,
+                path: '/components/example',
               },
               {
-                title: `ComponentName`,
-                path: '/components/component-name',
+                title: `Dashboards`,
+                path: '/components/dashboards',
               },
             ],
+          },
+          {
+            title: `Widgets`,
           },
         ],
       },

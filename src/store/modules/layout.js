@@ -1,23 +1,29 @@
 /* eslint-disable no-unused-vars */
+import API from '../../utils/api';
+
 const initialState = {
-  layout: 'Я из стора layout библиотеки!!!',
+  dashboards: null,
 };
 
 const state = initialState;
 
 const getters = {
-  layout: (state) => state.layout,
+  dashboards: (state) => state.dashboards,
 };
 
 const actions = {
-  setLayout({ state }, layout) {
-    this.commit('setLayout', layout);
+  getDashboards({ commit }, api) {
+    console.log('getDashboards actions!!!', api);
+    API.getDashboards(api).then((res) => {
+      commit('getDashboards', res);
+    });
   },
 };
 
 const mutations = {
-  setLayout(state, layout) {
-    state.layout = layout;
+  getDashboards(state, dashboards) {
+    console.log('getDashboards mutations: ', dashboards);
+    state.dashboards = dashboards;
   },
 };
 
