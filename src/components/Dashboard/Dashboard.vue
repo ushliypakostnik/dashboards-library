@@ -53,33 +53,53 @@ export default {
   },
 
   mounted() {
-    this.data.widgets.forEach((widget, i) => {
+    this.data.widgets.forEach((widget, index) => {
       this.layout.push({
         ...setWidget(widget),
-        i,
+        i: index.toString(),
       });
     });
 
-    const top = this.layout.find((widget) => widget.widget.includes('top'));
+    console.log('this.layout: ', this.layout);
+
+    const top = this.layout.find(
+      (widget) => widget.widget && widget.widget.includes('top'),
+    );
     // eslint-disable-next-line no-unused-vars
-    let y = top ? top.h : 0;
+    let y;
+    if (top) {
+      this.getItemByI(top.i).x = 0;
+      this.getItemByI(top.i).y = 0;
+      y = top.h;
+    } else y = 0;
     let x = 0;
-    this.data.widgets
-      .filter((widget) => !widget.widget.includes('top'))
+    this.layout
+      .filter((widget) => widget.widget && !widget.widget.includes('top'))
       .forEach((widget) => {
+        this.getItemByI(widget.i).y = y;
         if (widget.w === 1) {
           if (x === 0) {
-            widget.x = 0;
+            this.getItemByI(widget.i).x = 0;
             x = 1;
           } else {
-            widget.x = 1;
+            this.getItemByI(widget.i).x = 1;
             y += widget.h;
           }
         } else {
+          this.getItemByI(widget.i).x = 0;
           if (x === 1) y += widget.h;
-          widget.x = 0;
         }
       });
+  },
+
+  methods: {
+    movedEvent() {},
+
+    // Utils
+
+    getItemByI(i) {
+      return this.layout.find((item) => item.i === i);
+    },
   },
 };
 </script>

@@ -126,6 +126,7 @@ $name = '.dashboards'
     width: 100%
     height 100%
     background $colors.sky
+    padding 20px
 
   &__toggle
     position absolute

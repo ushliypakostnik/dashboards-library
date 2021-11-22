@@ -21,6 +21,7 @@ export default {
 $name = '.widget'
 
 {$name}
+  height 100%
   background $colors.stone
   border 2px solid $colors.primary
   padding 20px
