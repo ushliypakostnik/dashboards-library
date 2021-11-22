@@ -20,12 +20,16 @@ module.exports = {
             title: `Components`,
             children: [
               {
-                title: `Example`,
-                path: '/components/example',
-              },
-              {
                 title: `Dashboards`,
                 path: '/components/dashboards',
+              },
+              {
+                title: `Dashboard`,
+                path: '/components/dashboard',
+              },
+              {
+                title: `Widget`,
+                path: '/components/widget',
               },
             ],
           },

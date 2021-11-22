@@ -9,7 +9,7 @@ Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
 const persistState = createPersistedState({
-  paths: ['dashboards'],
+  paths: ['dashboard'],
 });
 
 export default new Vuex.Store({

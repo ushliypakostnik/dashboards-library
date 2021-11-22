@@ -5,9 +5,9 @@
     :class="{ 'dashboards--min': isMenuOpen }"
   >
     <aside class="dashboards__sidebar">
-      <button type="button" class="dashboards__toggle" @click="toggle">
+      <!-- <button type="button" class="dashboards__toggle" @click="toggle">
         Toggle
-      </button>
+      </button> -->
       <ul class="dashboards__menu">
         <li
           v-for="(item, index) in dashboards"
@@ -19,7 +19,7 @@
       </ul>
     </aside>
     <div class="dashboards__content">
-      <Example />
+      <Dashboard v-if="dashboard" :data="dashboard" />
     </div>
   </main>
 </template>
@@ -45,18 +45,34 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['dashboards']),
+    ...mapGetters(['dashboards', 'dashboard']),
+  },
+
+  watch:{
+    $route() {
+      this.checkDashboard();
+    },
   },
 
   mounted() {
     this.getDashboards(this.api);
+    this.checkDashboard();
   },
 
   methods: {
-    ...mapActions(['getDashboards']),
+    ...mapActions(['getDashboards', 'getDashboard']),
 
     toggle() {
-      this.isMenuOpen = !this.isMenuOpen;
+      // this.isMenuOpen = !this.isMenuOpen;
+    },
+
+    checkDashboard() {
+      console.log('Route: ', this.$router.currentRoute.path);
+      if (this.$router.currentRoute.path !== '/')
+        this.getDashboard({
+          api: this.api,
+          dashboard: this.$router.currentRoute.path,
+        });
     },
   },
 };

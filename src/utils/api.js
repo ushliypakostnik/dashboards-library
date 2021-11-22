@@ -5,7 +5,12 @@ axios.defaults.withCredentials = false;
 export default {
   getDashboards(api) {
     console.log('API getDashboards, API_URL: ', api);
-    return this.get(api, 'api/dashboards');
+    return this.get(`${api}api/dashboards`);
+  },
+
+  getDashboard(api, dashboard) {
+    console.log('API getDashboard, API_URL: ', api, dashboard);
+    return this.get(`${api}api/dashboard${dashboard}`);
   },
 
   // ----------------------
@@ -13,11 +18,10 @@ export default {
   // ----------------------
 
   // axios get interface
-  get(api, url) {
+  get(url) {
     return new Promise((resolve, reject) => {
-      console.log(`${new Date().toISOString()} | API request, GET: ${url}`);
       axios
-        .get(api + url)
+        .get(url)
         .then(
           (response) => {
             console.log('response: ', response);
@@ -36,11 +40,10 @@ export default {
   },
 
   // axios post interface
-  post(api, url, data) {
+  post(url, data) {
     return new Promise((resolve, reject) => {
-      // console.log(`${new Date().toISOString()} | API request, POST: ${url}`);
       axios
-        .post(api + url, data)
+        .post(url, data)
         .then(
           (response) => {
             resolve(response);
@@ -56,11 +59,10 @@ export default {
   },
 
   // axios delete interface
-  delete(api, url) {
+  delete(url) {
     return new Promise((resolve, reject) => {
-      // console.log(`${new Date().toISOString()} | API request, DELETE: ${url}`);
       axios
-        .delete(api + url)
+        .delete(url)
         .then(
           (response) => {
             resolve(response.data);
