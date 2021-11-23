@@ -1,7 +1,9 @@
 import Vue from 'vue';
+import Router from 'vue-router';
+
 import store from './store';
 
-Vue.config.productionTip = false;
+import App from './App.vue';
 
 import * as components from './components';
 
@@ -17,9 +19,31 @@ const ComponentLibrary = {
   },
 };
 
-export default ComponentLibrary;
+Vue.config.productionTip = false;
 
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(ComponentLibrary);
-  window.Vue.use(store);
 }
+
+// ATTENTION! Set to true if you want
+// to develop a module (not documentation)
+// and false before publishing for use in projects!
+const isDevelopmentModuleMode = false;
+if (isDevelopmentModuleMode) {
+  console.log('Start development module!');
+
+  Vue.use(Router);
+
+  const router = new Router({
+    mode: 'history',
+    base: process.env.BASE_URL,
+  });
+
+  new Vue({
+    store,
+    router,
+    render: (h) => h(App),
+  }).$mount('#app');
+}
+
+export default ComponentLibrary;
