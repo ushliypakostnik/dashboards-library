@@ -21,6 +21,7 @@
     <div class="dashboards__content">
       <Dashboard
         v-if="dashboard"
+        :api="api"
         :is-menu-open="isMenuOpen"
         :id="dashboard.id"
         :widgets="dashboard.widgets"
@@ -32,21 +33,17 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 
+import common from '../../mixins/common';
+
 import Dashboard from '..//Dashboard';
 
 export default {
   name: 'Dashboards',
 
+  mixins: [common],
+
   components: {
     Dashboard,
-  },
-
-  props: {
-    api: {
-      type: [String, null],
-      required: false,
-      default: null,
-    },
   },
 
   computed: {
@@ -65,7 +62,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getDashboards', 'getDashboard', 'setMenu']),
+    ...mapActions([
+      'getDashboards',
+      'getDashboard',
+      'nullifyDashboard',
+      'setMenu',
+    ]),
 
     toggle() {
       this.setMenu(!this.isMenuOpen);
@@ -73,6 +75,7 @@ export default {
 
     checkDashboard() {
       console.log('Route: ', this.$router.currentRoute.path);
+      this.nullifyDashboard();
       if (this.$router.currentRoute.path !== '/')
         this.getDashboard({
           api: this.api,

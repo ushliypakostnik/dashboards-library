@@ -15,11 +15,16 @@ export const DESIGN = {
 };
 
 export const setWidget = (widget) => {
-  switch (widget) {
+  const common = {
+    widget: widget.widget,
+    data: widget.data,
+  };
+
+  switch (widget.widget) {
     case 'top1':
       return {
-        widget,
-        h: DESIGN.WIDGETS_HEIGHT,
+        ...common,
+        h: DESIGN.WIDGETS_HEIGHT * 1.5,
         hWide: DESIGN.WIDGETS_HEIGHT,
         w: 2,
         isCollection: false,
@@ -27,7 +32,7 @@ export const setWidget = (widget) => {
       };
     case 'widget1':
       return {
-        widget,
+        ...common,
         h: DESIGN.WIDGETS_HEIGHT,
         w: 1,
         isCollection: false,
@@ -35,7 +40,7 @@ export const setWidget = (widget) => {
       };
     case 'widget2':
       return {
-        widget,
+        ...common,
         h: DESIGN.WIDGETS_HEIGHT,
         w: 2,
         isCollection: false,
@@ -43,7 +48,7 @@ export const setWidget = (widget) => {
       };
     case 'collection1':
       return {
-        widget,
+        ...common,
         h: DESIGN.WIDGETS_HEIGHT,
         w: 2,
         isCollection: true,

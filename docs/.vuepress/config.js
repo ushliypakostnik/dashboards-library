@@ -31,6 +31,10 @@ module.exports = {
                 title: `Widget`,
                 path: '/components/widget',
               },
+              {
+                title: `Subidget`,
+                path: '/components/subwidget',
+              },
             ],
           },
           {

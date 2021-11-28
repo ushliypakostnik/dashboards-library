@@ -13,6 +13,16 @@ export default {
     return this.get(`${api}api/dashboard${dashboard}`);
   },
 
+  getWidget(api) {
+    console.log('API getWidget, API_URL: ', api);
+    return this.get(`${api}api/widget`);
+  },
+
+  getCollection(api) {
+    console.log('API getCollection, API_URL: ', api);
+    return this.get(`${api}api/collection`);
+  },
+
   // ----------------------
   // general API interfaces
   // ----------------------

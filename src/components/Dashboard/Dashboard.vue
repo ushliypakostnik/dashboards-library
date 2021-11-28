@@ -20,7 +20,7 @@
       :i="widget.i"
       :static="widget.static"
     >
-      <Widget :config="widget" />
+      <Widget :config="widget" :api="api" @setCollection="setCollection" />
     </grid-item>
   </grid-layout>
 </template>
@@ -28,12 +28,16 @@
 <script>
 import VueGridLayout from 'vue-grid-layout';
 
+import common from '../../mixins/common';
+
 import { setWidget } from '../../utils/constants';
 
 import Widget from '..//Widget';
 
 export default {
   name: 'Dashboard',
+
+  mixins: [common],
 
   components: {
     GridLayout: VueGridLayout.GridLayout,
@@ -53,6 +57,11 @@ export default {
     isMenuOpen: {
       type: Boolean,
       required: true,
+    },
+    api: {
+      type: [String, null],
+      required: false,
+      default: null,
     },
   },
 
@@ -100,8 +109,6 @@ export default {
           i: index.toString(),
         });
       });
-
-      console.log('this.layout: ', this.layout);
 
       const top = this.layout.find((widget) => widget.widget.includes('top'));
 
@@ -177,6 +184,10 @@ export default {
             rightColHeight += this.getItemWideByI(widget.i).h;
           }
         });
+    },
+
+    setCollection() {
+      console.log('Dashboard setCollection!!!');
     },
   },
 };

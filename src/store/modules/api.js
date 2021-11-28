@@ -27,6 +27,10 @@ const actions = {
       commit('getDashboard', res);
     });
   },
+
+  nullifyDashboard({ commit }) {
+    commit('nullifyDashboard');
+  },
 };
 
 const mutations = {
@@ -38,6 +42,10 @@ const mutations = {
   getDashboard(state, dashboard) {
     console.log('getDashboard mutations: ', dashboard);
     state.dashboard = dashboard;
+  },
+
+  nullifyDashboard({ commit }) {
+    state.dashboard = null;
   },
 };
 

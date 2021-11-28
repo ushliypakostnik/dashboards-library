@@ -1,4 +1,4 @@
-# Widget
+# Subwidget
 
 ## Description
 
@@ -8,7 +8,7 @@ This is universal Widget.
 
 ```vue
 <template>
-  <Widget config="Object(required)" />
+  <Subwidget config="Object(required)" />
 </template>
 ```
 
@@ -17,10 +17,10 @@ This is universal Widget.
 ### Props
 | **Name** | **Type** | **Description** | **Default** |
 | :------- | :------- | :-------------- | ----------: |
-| **config** | Object | Widget configuration | (required) |
+| **config** | Object | Subidget configuration | (required) |
 
 ## Source code
 
-<code class="code--path">@/src/components/Widget/Widget.vue</code>
+<code class="code--path">@/src/components/Subwidget/Subwidget.vue</code>
 
-<<< @/src/components/Widget/Widget.vue
+<<< @/src/components/Subwidget/Subwidget.vue

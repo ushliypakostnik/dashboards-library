@@ -1,17 +1,66 @@
 <template>
-  <div class="widget" :class="`widget--${config.widget}`">
-    {{ config.widget }}, id: {{ config.i }}
+  <div v-if="isLoaded" class="widget__wrapper">
+    <div
+      v-if="!isCollection"
+      class="widget"
+      :class="`widget--${config.widget}`"
+    >
+      <div>
+        {{ config.widget }}, id: {{ config.i }}<br /><span
+          class="widget__test"
+          >{{ content }}</span
+        >
+      </div>
+    </div>
+
+    <div v-else>
+      <Subwidget
+        v-for="(subwidget, index) in content"
+        :key="`subwidget${index}`"
+        :api="api"
+        :config="subwidget"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import API from '../../utils/api';
+
+import widget from '../../mixins/widget';
+
+import Subwidget from '../Subwidget';
+
 export default {
   name: 'Widget',
 
-  props: {
-    config: {
-      type: Object,
-      required: true,
+  mixins: [widget],
+
+  components: { Subwidget },
+
+  computed: {
+    isCollection() {
+      return this.config.widget.includes('collection');
+    },
+  },
+
+  mounted() {
+    if (this.isCollection) this.getCollection();
+    else this.getWidget();
+  },
+
+  methods: {
+    getCollection() {
+      API.getCollection(this.api)
+        .then((res) => {
+          console.log('Widget getCollection: ', res);
+          this.content = res.widgets;
+          this.$emit('setCollection');
+          this.isLoaded = true;
+        })
+        .catch((error) => {
+          console.log('Widget getCollection: ', error);
+        });
     },
   },
 };
@@ -23,14 +72,7 @@ export default {
 $name = '.widget'
 
 {$name}
-  @extend $flex--center
-  height 100%
-  background $colors.stone
-  border 4px solid $colors.primary
-  color $colors.primary
-  padding 20px
-  $text("anna")
-  $border-radius("shooting")
+  @extend $widget
 
   &--top1
     background rgba($colors.cat, $opacites.psy)
@@ -38,7 +80,4 @@ $name = '.widget'
   &--widget1,
   &--widget2
     background rgba($colors.dog, $opacites.psy)
-
-  &--collection1
-    background rgba($colors.bird, $opacites.psy)
 </style>
