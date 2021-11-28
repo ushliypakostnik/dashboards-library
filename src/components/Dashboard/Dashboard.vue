@@ -188,7 +188,7 @@ export default {
               if (leftColHeight <= rightColHeight) collection = 0;
               else collection = 1;
             }
-            if (collection == 0) {
+            if (collection === 0) {
               widget.x = 0;
               widget.y = leftColHeight;
               leftColHeight += this.getItemWideByI(widget.i).h;
