@@ -2,12 +2,12 @@
   <main
     role="main"
     class="dashboards"
-    :class="{ 'dashboards--min': isMenuOpen }"
+    :class="{ 'dashboards--min': !isMenuOpen }"
   >
     <aside class="dashboards__sidebar">
-      <!-- <button type="button" class="dashboards__toggle" @click="toggle">
+      <button type="button" class="dashboards__toggle" @click="toggle">
         Toggle
-      </button> -->
+      </button>
       <ul class="dashboards__menu">
         <li
           v-for="(item, index) in dashboards"
@@ -21,6 +21,7 @@
     <div class="dashboards__content">
       <Dashboard
         v-if="dashboard"
+        :is-menu-open="isMenuOpen"
         :id="dashboard.id"
         :widgets="dashboard.widgets"
       />
@@ -48,14 +49,8 @@ export default {
     },
   },
 
-  data() {
-    return {
-      isMenuOpen: false,
-    };
-  },
-
   computed: {
-    ...mapGetters(['dashboards', 'dashboard']),
+    ...mapGetters(['dashboards', 'dashboard', 'isMenuOpen']),
   },
 
   watch: {
@@ -70,10 +65,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getDashboards', 'getDashboard']),
+    ...mapActions(['getDashboards', 'getDashboard', 'setMenu']),
 
     toggle() {
-      // this.isMenuOpen = !this.isMenuOpen;
+      this.setMenu(!this.isMenuOpen);
     },
 
     checkDashboard() {
@@ -130,6 +125,13 @@ $name = '.dashboards'
   &__menu-item
     color $colors.stone
     margin-bottom: 20px
+    $text("maria")
+
+    a
+      text-decoration none
+
+      &:hover
+        text-decoration underline
 
   &__content
     width: 100%

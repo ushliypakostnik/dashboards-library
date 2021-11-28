@@ -27,17 +27,15 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 // ATTENTION! Set to true if you want
 // to develop a module (not documentation)
-// and false before publishing for use in projects!
-const isDevelopmentModuleMode = true;
+// and false before publishing for use in projects
+// or develop documentation!
+const isDevelopmentModuleMode = false;
 if (isDevelopmentModuleMode) {
   console.log('Start development module!');
 
   Vue.use(Router);
 
-  const router = new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
-  });
+  const router = new Router();
 
   new Vue({
     store,

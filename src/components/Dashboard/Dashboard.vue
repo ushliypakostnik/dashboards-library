@@ -1,6 +1,6 @@
 <template>
   <grid-layout
-    :layout="layout"
+    :layout="layoutView"
     :col-num="2"
     :row-height="1"
     :is-draggable="true"
@@ -11,7 +11,7 @@
     :use-css-transforms="true"
   >
     <grid-item
-      v-for="widget in layout"
+      v-for="widget in layoutView"
       :key="widget.i"
       :x="widget.x"
       :y="widget.y"
@@ -32,71 +32,6 @@ import { setWidget } from '../../utils/constants';
 
 import Widget from '..//Widget';
 
-/*
-const data = [
-  {
-    widget: 'top1',
-    h: 15,
-    w: 2,
-    isCollection: false,
-    static: true,
-    i: '2',
-    x: 0,
-    y: 0,
-  },
-  {
-    widget: 'widget2',
-    h: 15,
-    w: 2,
-    isCollection: false,
-    static: false,
-    i: '0',
-    y: 15,
-    x: 0,
-  },
-  {
-    widget: 'widget1',
-    h: 15,
-    w: 1,
-    isCollection: false,
-    static: false,
-    i: '1',
-    y: 30,
-    x: 0,
-  },
-  {
-    widget: 'widget2',
-    h: 15,
-    w: 2,
-    isCollection: false,
-    static: false,
-    i: '3',
-    y: 45,
-    x: 0,
-  },
-  {
-    widget: 'widget1',
-    h: 15,
-    w: 1,
-    isCollection: false,
-    static: false,
-    i: '4',
-    y: 60,
-    x: 0,
-  },
-  {
-    widget: 'widget2',
-    h: 15,
-    w: 2,
-    isCollection: false,
-    static: false,
-    i: '5',
-    y: 75,
-    x: 0,
-  },
-];
-*/
-
 export default {
   name: 'Dashboard',
 
@@ -115,13 +50,24 @@ export default {
       type: Array,
       required: true,
     },
+    isMenuOpen: {
+      type: Boolean,
+      required: true,
+    },
   },
 
   data() {
     return {
       layout: [],
-      // data,
+      layoutWide: [],
     };
+  },
+
+  computed: {
+    layoutView() {
+      if (this.isMenuOpen) return this.layout;
+      return this.layoutWide;
+    },
   },
 
   watch: {
@@ -138,10 +84,14 @@ export default {
     // Utils
 
     getItemByI(i) {
-      return this.layout.find((item) => item.i === i);
+      return this.layout.find((widget) => widget.i === i);
     },
 
-    // Layout
+    getItemWideByI(i) {
+      return this.layoutWide.find((widget) => widget.i === i);
+    },
+
+    // Set Layout
     setLayout() {
       this.layout = [];
       this.widgets.forEach((widget, index) => {
@@ -153,9 +103,7 @@ export default {
 
       console.log('this.layout: ', this.layout);
 
-      const top = this.layout.find(
-        (widget) => widget.widget && widget.widget.includes('top'),
-      );
+      const top = this.layout.find((widget) => widget.widget.includes('top'));
 
       let y;
       if (top) {
@@ -167,7 +115,7 @@ export default {
       let x = 0;
 
       const widgets = this.layout.filter(
-        (widget) => widget.widget && !widget.widget.includes('top'),
+        (widget) => !widget.widget.includes('top'),
       );
 
       // eslint-disable-next-line no-unused-vars
@@ -193,6 +141,42 @@ export default {
       }
 
       this.layout = JSON.parse(JSON.stringify(this.layout));
+      this.setLayoutWide();
+    },
+
+    // Set Layout Wide
+    setLayoutWide() {
+      this.layoutWide = [];
+      this.layout.forEach((widget) => {
+        const copy = { ...widget };
+        if (!widget.widget.includes('top')) copy.w = 1;
+        this.layoutWide.push(copy);
+      });
+
+      let height;
+      const top = this.layoutWide.find((widget) =>
+        widget.widget.includes('top'),
+      );
+      if (top) {
+        height = this.getItemWideByI(top.i).hWide;
+        this.getItemWideByI(top.i).h = height;
+      } else height = 0;
+
+      let leftColHeight = height;
+      let rightColHeight = height;
+      this.layoutWide
+        .filter((widget) => !widget.widget.includes('top'))
+        .forEach((widget) => {
+          if (leftColHeight <= rightColHeight) {
+            widget.x = 0;
+            widget.y = leftColHeight;
+            leftColHeight += this.getItemWideByI(widget.i).h;
+          } else {
+            widget.x = 1;
+            widget.y = rightColHeight;
+            rightColHeight += this.getItemWideByI(widget.i).h;
+          }
+        });
     },
   },
 };

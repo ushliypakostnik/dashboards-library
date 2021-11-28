@@ -20,6 +20,7 @@ export const setWidget = (widget) => {
       return {
         widget,
         h: DESIGN.WIDGETS_HEIGHT,
+        hWide: DESIGN.WIDGETS_HEIGHT,
         w: 2,
         isCollection: false,
         static: true,
