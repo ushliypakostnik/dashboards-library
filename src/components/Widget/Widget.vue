@@ -1,9 +1,11 @@
 <template>
   <div v-if="isLoaded" class="widget__wrapper">
     <div
-      v-if="!isCollection"
       class="widget"
-      :class="`widget--${config.widget}`"
+      :class="[
+        `widget--${config.widget}`,
+        config.i.includes('.') && `widget--collection`,
+      ]"
     >
       <div>
         {{ config.widget }}, id: {{ config.i }}<br /><span
@@ -12,31 +14,32 @@
         >
       </div>
     </div>
-
-    <div v-else>
-      <Subwidget
-        v-for="(subwidget, index) in content"
-        :key="`subwidget${index}`"
-        :api="api"
-        :config="subwidget"
-      />
-    </div>
   </div>
 </template>
 
 <script>
 import API from '../../utils/api';
 
-import widget from '../../mixins/widget';
-
-import Subwidget from '../Subwidget';
+import common from '../../mixins/common';
 
 export default {
   name: 'Widget',
 
-  mixins: [widget],
+  mixins: [common],
 
-  components: { Subwidget },
+  props: {
+    config: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+      isLoaded: false,
+      content: null,
+    };
+  },
 
   computed: {
     isCollection() {
@@ -50,13 +53,28 @@ export default {
   },
 
   methods: {
+    getWidget() {
+      API.getWidget(this.api)
+        .then((res) => {
+          console.log('Widget getWidgetd: ', res);
+          this.content = res.tabs;
+          this.isLoaded = true;
+        })
+        .catch((error) => {
+          console.log('Widget getWidgetd: ', error);
+        });
+    },
+
     getCollection() {
       API.getCollection(this.api)
         .then((res) => {
           console.log('Widget getCollection: ', res);
-          this.content = res.widgets;
-          this.$emit('setCollection');
-          this.isLoaded = true;
+          // this.content = res.widgets;
+          this.$emit('setCollection', {
+            id: this.config.i,
+            widgets: res.widgets,
+          });
+          // this.isLoaded = true;
         })
         .catch((error) => {
           console.log('Widget getCollection: ', error);
@@ -72,7 +90,22 @@ export default {
 $name = '.widget'
 
 {$name}
-  @extend $widget
+  @extend $flex--center
+  height 100%
+  background $colors.stone
+  border 4px solid $colors.primary
+  color $colors.primary
+  padding 20px
+  text-align: center
+  $text("anna")
+  $border-radius("shooting")
+
+  &__wrapper
+    height 100%
+
+  &__test
+    color $colors.sea
+    $text("alena")
 
   &--top1
     background rgba($colors.cat, $opacites.psy)
@@ -80,4 +113,7 @@ $name = '.widget'
   &--widget1,
   &--widget2
     background rgba($colors.dog, $opacites.psy)
+
+  &--collection
+    background rgba($colors.bird, $opacites.psy)
 </style>

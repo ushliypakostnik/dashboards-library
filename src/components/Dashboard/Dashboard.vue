@@ -100,6 +100,14 @@ export default {
       return this.layoutWide.find((widget) => widget.i === i);
     },
 
+    getItemIndexByI(i) {
+      return this.layout.indexOf(this.getItemByI(i));
+    },
+
+    getItemWideIndexByI(i) {
+      return this.layoutWide.indexOf(this.getItemWideByI(i));
+    },
+
     // Set Layout
     setLayout() {
       this.layout = [];
@@ -174,20 +182,55 @@ export default {
       this.layoutWide
         .filter((widget) => !widget.widget.includes('top'))
         .forEach((widget) => {
-          if (leftColHeight <= rightColHeight) {
-            widget.x = 0;
-            widget.y = leftColHeight;
+          if (widget.i.includes('.')) {
+            widget.x = leftColHeight <= rightColHeight ? 0 : 1;
+            widget.y = leftColHeight <= rightColHeight ? leftColHeight : rightColHeight;
             leftColHeight += this.getItemWideByI(widget.i).h;
           } else {
-            widget.x = 1;
-            widget.y = rightColHeight;
-            rightColHeight += this.getItemWideByI(widget.i).h;
+            if (leftColHeight <= rightColHeight) {
+              widget.x = 0;
+              widget.y = leftColHeight;
+              leftColHeight += this.getItemWideByI(widget.i).h;
+            } else {
+              widget.x = 1;
+              widget.y = rightColHeight;
+              rightColHeight += this.getItemWideByI(widget.i).h;
+            }
           }
         });
     },
 
-    setCollection() {
-      console.log('Dashboard setCollection!!!');
+    setCollection(collection) {
+      console.log('Dashboard setCollection!!!', collection);
+
+      const index = this.getItemIndexByI(collection.id);
+
+      let y = this.getItemByI(collection.id).y;
+      const widgets = collection.widgets.map((widget, index) => {
+        return {
+          ...setWidget(widget),
+          x: 0,
+          y: y + this.getItemByI(collection.id).h * index,
+          i: `${collection.id}.${index}`,
+        };
+      });
+
+      let h = widgets[0].h;
+
+      const layoutCopy = this.layout;
+      this.layout = [];
+      for (let i = 0; i < index; i++) {
+        this.layout.push(layoutCopy[i]);
+      }
+      for (let i = 0; i < collection.widgets.length; i++) {
+        this.layout.push(widgets[i]);
+      }
+      for (let i = index + 1; i < layoutCopy.length; i++) {
+        layoutCopy[i].y += h * (layoutCopy.length - index);
+        this.layout.push(layoutCopy[i]);
+      }
+
+      this.setLayoutWide();
     },
   },
 };
