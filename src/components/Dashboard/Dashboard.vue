@@ -179,14 +179,26 @@ export default {
 
       let leftColHeight = height;
       let rightColHeight = height;
+      let collection;
       this.layoutWide
         .filter((widget) => !widget.widget.includes('top'))
         .forEach((widget) => {
           if (widget.i.includes('.')) {
-            widget.x = leftColHeight <= rightColHeight ? 0 : 1;
-            widget.y = leftColHeight <= rightColHeight ? leftColHeight : rightColHeight;
-            leftColHeight += this.getItemWideByI(widget.i).h;
+            if (!collection) {
+              if (leftColHeight <= rightColHeight) collection = 0;
+              else collection = 1;
+            }
+            if (collection == 0) {
+              widget.x = 0;
+              widget.y = leftColHeight;
+              leftColHeight += this.getItemWideByI(widget.i).h;
+            } else {
+              widget.x = 1;
+              widget.y = rightColHeight;
+              rightColHeight += this.getItemWideByI(widget.i).h;
+            }
           } else {
+            collection = null;
             if (leftColHeight <= rightColHeight) {
               widget.x = 0;
               widget.y = leftColHeight;
