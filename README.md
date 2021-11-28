@@ -1,4 +1,4 @@
-# Ui-library-starter test project
+# Dashboards library project
 
 ### Project setup
 ```
