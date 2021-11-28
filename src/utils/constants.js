@@ -44,9 +44,9 @@ export const setWidget = (widget) => {
       return {
         widget,
         h: DESIGN.WIDGETS_HEIGHT,
-        w: 1,
+        w: 2,
         isCollection: true,
-        static: true,
+        static: false,
       };
   }
 };

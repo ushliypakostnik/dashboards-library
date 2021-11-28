@@ -19,7 +19,11 @@
       </ul>
     </aside>
     <div class="dashboards__content">
-      <Dashboard v-if="dashboard" :data="dashboard" />
+      <Dashboard
+        v-if="dashboard"
+        :id="dashboard.id"
+        :widgets="dashboard.widgets"
+      />
     </div>
   </main>
 </template>
@@ -27,8 +31,14 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 
+import Dashboard from '..//Dashboard';
+
 export default {
   name: 'Dashboards',
+
+  components: {
+    Dashboard,
+  },
 
   props: {
     api: {
@@ -48,7 +58,7 @@ export default {
     ...mapGetters(['dashboards', 'dashboard']),
   },
 
-  watch:{
+  watch: {
     $route() {
       this.checkDashboard();
     },
@@ -90,7 +100,6 @@ $name = '.dashboards'
 
 {$name}
   width 100%
-  height 100vh
   position relative
   padding-left $sidebar-width
   transition padding-left $effect
@@ -108,7 +117,7 @@ $name = '.dashboards'
     width $sidebar-width
     transition width $effect
     height 100%
-    position: absolute
+    position: fixed
     left 0
     top 0
     bottom 0
@@ -124,7 +133,7 @@ $name = '.dashboards'
 
   &__content
     width: 100%
-    height 100%
+    min-height 100vh
     background $colors.sky
     padding 20px
 

@@ -28,7 +28,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 // ATTENTION! Set to true if you want
 // to develop a module (not documentation)
 // and false before publishing for use in projects!
-const isDevelopmentModuleMode = false;
+const isDevelopmentModuleMode = true;
 if (isDevelopmentModuleMode) {
   console.log('Start development module!');
 
