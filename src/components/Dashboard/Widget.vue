@@ -8,10 +8,8 @@
       ]"
     >
       <div>
-        {{ config.widget }}, id: {{ config.i }}<br /><span
-          class="widget__test"
-          >{{ content }}</span
-        >
+        {{ config.widget }}, id: {{ config.i }}<br />
+        <div class="widget__test">{{ content }}</div>
       </div>
     </div>
   </div>

@@ -58,11 +58,6 @@ export default {
       type: Array,
       required: true,
     },
-    api: {
-      type: [String, null],
-      required: false,
-      default: null,
-    },
   },
 
   data() {
