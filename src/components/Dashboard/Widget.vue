@@ -67,12 +67,10 @@ export default {
       API.getCollection(this.api)
         .then((res) => {
           console.log('Widget getCollection: ', res);
-          // this.content = res.widgets;
           this.$emit('setCollection', {
             id: this.config.i,
             widgets: res.widgets,
           });
-          // this.isLoaded = true;
         })
         .catch((error) => {
           console.log('Widget getCollection: ', error);
