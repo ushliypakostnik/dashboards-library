@@ -8,7 +8,11 @@ This is Dashboard Grid.
 
 ```vue
 <template>
-  <Dashboard data="Object(required)" />
+  <Dashboard
+    api="String(required)"
+    id="String(required)"
+    widgets="Array(required)"
+  />
 </template>
 ```
 
@@ -17,7 +21,9 @@ This is Dashboard Grid.
 ### Props
 | **Name** | **Type** | **Description** | **Default** |
 | :------- | :------- | :-------------- | ----------: |
-| **data** | Object | Dashboard data | (required) |
+| **api** | String | API URL | (required) |
+| **id** | String | Dashboard unique id | (required) |
+| **widgets** | Array | Widgets config | (required) |
 
 ## Source code
 
