@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Dashboards api="http://localhost:8083/" />
+    <Dashboards api="http://localhost:8085/" />
   </div>
 </template>
 

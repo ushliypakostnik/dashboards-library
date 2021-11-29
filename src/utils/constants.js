@@ -11,6 +11,7 @@ export const DESIGN = {
     tablet: 768,
     desktop: 1025,
   },
+  ANIMATION_DURATION: 0.1,
   WIDGETS_HEIGHT: 15,
 };
 

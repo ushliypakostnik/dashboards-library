@@ -9,6 +9,7 @@
     :vertical-compact="true"
     :margin="[16, 16]"
     :use-css-transforms="true"
+    @layout-updated="layoutUpdatedEvent"
   >
     <grid-item
       v-for="widget in layoutView"
@@ -19,6 +20,8 @@
       :h="widget.h"
       :i="widget.i"
       :static="widget.static"
+      @moved="movedEvent"
+      @resized="resizedEvent"
     >
       <Widget :config="widget" :api="api" @setCollection="setCollection" />
     </grid-item>
@@ -26,13 +29,14 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import VueGridLayout from 'vue-grid-layout';
 
 import common from '../../mixins/common';
 
 import { setWidget } from '../../utils/constants';
 
-import Widget from '..//Widget';
+import Widget from './/Widget';
 
 export default {
   name: 'Dashboard',
@@ -54,10 +58,6 @@ export default {
       type: Array,
       required: true,
     },
-    isMenuOpen: {
-      type: Boolean,
-      required: true,
-    },
     api: {
       type: [String, null],
       required: false,
@@ -73,6 +73,8 @@ export default {
   },
 
   computed: {
+    ...mapGetters(['isMenuOpen', 'layouts']),
+
     layoutView() {
       if (this.isMenuOpen) return this.layout;
       return this.layoutWide;
@@ -90,6 +92,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(['saveDashboard']),
+
     // Utils
 
     getItemByI(i) {
@@ -108,8 +112,77 @@ export default {
       return this.layoutWide.indexOf(this.getItemWideByI(i));
     },
 
-    // Set Layout
+    isDashboardInStore() {
+      return Object.prototype.hasOwnProperty.call(this.layouts, this.id);
+    },
+
+    // Vue Grid Layout
+
+    movedEvent(i) {
+      console.log('Dashboard movedEvent!!!', i);
+    },
+
+    resizedEvent(i, newH) {
+      console.log('Dashboard resizedEvent!!!', i, newH);
+
+      // Высота одинаковая на разных видах
+      if (this.isMenuOpen) this.getItemWideByI(i).h = newH;
+      else this.getItemByI(i).h = newH;
+    },
+
+    layoutUpdatedEvent(newLayout) {
+      console.log('Dashboard layoutUpdatedEvent!!!', newLayout);
+      if (!this.isMenuOpen) {
+        this.saveDashboard({
+          id: this.id,
+          layouts: {
+            layout: JSON.parse(JSON.stringify(this.layout)),
+            layoutWide: JSON.parse(JSON.stringify(newLayout)),
+          },
+        });
+      } else {
+        this.saveDashboard({
+          id: this.id,
+          layouts: {
+            layout: JSON.parse(JSON.stringify(newLayout)),
+            layoutWide: JSON.parse(JSON.stringify(this.layoutWide)),
+          },
+        });
+      }
+    },
+
+    // Layouts
+
     setLayout() {
+      console.log('Dashboard setLayouts!!!', this.layouts);
+
+      if (!this.layouts || !this.isDashboardInStore()) this.buildLayout();
+      else this.loadLayouts();
+    },
+
+    loadLayouts() {
+      console.log('Dashboard loadLayouts!!!', this.layouts);
+      this.layout = JSON.parse(JSON.stringify(this.layouts))[this.id].layout;
+      this.layoutWide = JSON.parse(JSON.stringify(this.layouts))[
+        this.id
+      ].layoutWide;
+    },
+
+    saveLayouts() {
+      console.log('Dashboard saveLayouts!!!', this.layouts);
+
+      this.saveDashboard({
+        id: this.id,
+        layouts: {
+          layout: this.layout,
+          layoutWide: this.layoutWide,
+        },
+      });
+    },
+
+    buildLayout() {
+      console.log('Dashboard build layout!!!');
+
       this.layout = [];
       this.widgets.forEach((widget, index) => {
         this.layout.push({
@@ -156,11 +229,12 @@ export default {
       }
 
       this.layout = JSON.parse(JSON.stringify(this.layout));
-      this.setLayoutWide();
+      this.buildLayoutWide();
     },
 
-    // Set Layout Wide
-    setLayoutWide() {
+    buildLayoutWide() {
+      console.log('Dashboard build layoutWide!!!');
+
       this.layoutWide = [];
       this.layout.forEach((widget) => {
         const copy = { ...widget };
@@ -210,6 +284,8 @@ export default {
             }
           }
         });
+
+      this.saveLayouts();
     },
 
     setCollection(collection) {
@@ -242,7 +318,7 @@ export default {
         this.layout.push(layoutCopy[i]);
       }
 
-      this.setLayoutWide();
+      this.buildLayoutWide();
     },
   },
 };

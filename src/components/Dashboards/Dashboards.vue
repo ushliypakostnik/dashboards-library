@@ -22,7 +22,6 @@
       <Dashboard
         v-if="dashboard"
         :api="api"
-        :is-menu-open="isMenuOpen"
         :id="dashboard.id"
         :widgets="dashboard.widgets"
       />
